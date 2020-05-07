@@ -12,11 +12,18 @@ app.use(methodOverride('_method'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const logRequestStart = 
+
+  app.use((req, res, next) => {
+    console.info(`Request received in ${process.env.HOSTNAME}`)
+    next()
+  })
+
 // router
 app.use('/', require('./src/routes'));
 
 // error handling
-app.use(function (request, response, next) {
+app.use(function (req, res, next) {
   let err = new Error('Not Found');
   err.status = 404;
   next(err);
