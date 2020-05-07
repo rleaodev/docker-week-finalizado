@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+
+const app     = require('../app');
+
+var server = app.listen(3000, function() {
+  var address = server.address();
+  console.log('App listening 3000');
+});
+server.on('error', function(err) {
+  console.log(err);
+});
