@@ -1,0 +1,8 @@
+version: '3.7'
+services:
+  backend:
+    environment: 
+      - MONGO_URL=meubanco-local:porta/docker-week
+    volumes: 
+      - "/PATH/COMPLETO/CODIGO/BACKEND:/app"
+    command: "npm run dev"

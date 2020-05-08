@@ -1,0 +1,25 @@
+version: '3.7'
+services:
+  meu-db:
+    image: mongo
+    container_name: meu-db
+  
+  backend:
+    build:
+      dockerfile: docker/backend.dockerfile
+      context: .
+    image: meu-backend-node
+    depends_on: 
+      - meu-db
+    environment: 
+      - MONGO_URL=mongodb://meu-db:27017/docker-week
+      
+  load-balancer:
+    build:
+      dockerfile: docker/nginx.dockerfile
+      context: .
+    container_name: lb
+    ports:
+      - "80:80"
+    depends_on: 
+      - backend

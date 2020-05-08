@@ -1,0 +1,46 @@
+version: '3.7'
+services:
+  meu-db:
+    image: mongo
+    container_name: meu-db
+  
+  backend:
+    build:
+      dockerfile: docker/backend.dockerfile
+      context: .
+    image: meu-backend-node
+    container_name: backend
+    depends_on: 
+      - meu-db
+  
+  backend2:
+    build:
+      dockerfile: docker/backend.dockerfile
+      context: .
+    image: meu-backend-node
+    container_name: backend2
+    depends_on: 
+      - meu-db
+    
+  
+  backend3:
+    build:
+      dockerfile: docker/backend.dockerfile
+      context: .
+    image: meu-backend-node
+    container_name: backend3
+    depends_on: 
+      - meu-db
+  
+  load-balancer:
+    build:
+      dockerfile: docker/modelo-copy-and-paste.nginx.dockerfile
+      context: .
+    image: nginx-lb
+    container_name: lb
+    ports:
+      - "80:80"
+    depends_on: 
+      - backend
+      - backend2
+      - backend3
