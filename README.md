@@ -31,5 +31,18 @@ docker-compose -f modelo-copy-and-paste.docker-compose.yaml up --build
 Para executar essa aplicaço, basta executar:
 
 ```
-docker-compose up --build
+docker-compose up --scale backend=3 --build
+```
+
+Atenção: Não esqueça de alterar o arquivo docker-compose.override, no meu caso ficou assim:
+
+```
+version: '3.7'
+services:
+  backend:
+    environment: 
+      - MONGO_URL=mongodb://meu-db:27017/docker-week
+    volumes: 
+      - "/home/rleao/code/docker/docker-week-finalizado:/app"
+    command: "npm run dev"
 ```
